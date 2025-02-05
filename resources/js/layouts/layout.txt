@@ -1,0 +1,170 @@
+<template>
+    <div>
+      <!-- Header and Navbar -->
+      <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 1000;">
+          <div class="container-fluid">
+            <button 
+              class="navbar-toggler" 
+              type="button" 
+              aria-expanded="false" 
+              aria-label="Toggle sidebar"
+              @click="toggleSidebar"
+              style="border: none; background: transparent; margin-right: 10px;">
+            </button>
+      
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <button class="btn btn-outline-primary" @click="toggleSidebar">
+                    Toggle Sidebar
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <router-link to="/" class="nav-link active">Home</router-link>
+                </li>
+                <li class="nav-item">
+                  <router-link to="/about" class="nav-link">About</router-link>
+                </li>
+              </ul>
+  
+              <!-- Centered Search Bar -->
+              <div class="d-flex w-100 justify-content-center">
+                <div class="input-group" style="max-width: 500px;">
+                  <input class="form-control me-2" type="search" placeholder="Search here..." aria-label="Search">
+                  <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+        </nav>
+      </header>
+      
+      <!-- Main Layout -->
+      <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div 
+          class="bg-light border-end" 
+          id="sidebar-wrapper" 
+          :style="{ 
+            width: sidebarOpen ? (isMobileView ? '250px' : '250px') : '0', 
+            position: isMobileView && sidebarOpen ? 'fixed' : 'absolute',
+            top: 5, 
+            left: 0,
+            zIndex: 999,
+            overflow: 'hidden',
+            height: '600px',
+            transition: 'width 0.3s ease'
+          }"
+        >
+          <div class="sidebar-heading">Sidebar</div>
+          <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Settings</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Settings</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a> 
+            <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Settings</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+          </div>
+        </div>
+      
+        <!-- Main Content -->
+        <div 
+          id="page-content-wrapper" 
+          :style="{ marginLeft: sidebarOpen && !isMobileView ? '250px' : '0' }"
+          style="padding-top: 20px; transition: margin-left 0.3s ease; z-index: 1;">
+          <main class="container-fluid">
+            <router-view />
+          </main>
+        </div>
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    name: 'DefaultLayout',
+    data() {
+      return {
+        sidebarOpen: true,  // Initially set sidebar closed for mobile view
+        isMobileView: false,
+      };
+    },
+    mounted() {
+      this.isMobileView = window.innerWidth <= 768;  // Check initial screen size
+      window.addEventListener('resize', this.handleResize);  // Listen for window resize
+    },
+    beforeDestroy() {
+      window.removeEventListener('resize', this.handleResize);  // Clean up the event listener
+    },
+    methods: {
+      toggleSidebar() {
+        this.sidebarOpen = !this.sidebarOpen;
+        if (this.isMobileView && !this.sidebarOpen) {
+          // Optional: prevent scrolling when sidebar is closed on mobile
+          document.body.style.overflow = 'auto';
+        }
+      },
+      handleResize() {
+        this.isMobileView = window.innerWidth <= 768;  // Update mobile view status on resize
+        if (this.isMobileView && !this.sidebarOpen) {
+          // If in mobile view and sidebar is closed, keep it closed
+          this.sidebarOpen = false;
+        } else if (!this.isMobileView) {
+          // Reset sidebar state on large screens
+          this.sidebarOpen = true;
+        }
+      },
+    },
+  };
+  </script>
+  
+  <style scoped>
+  #sidebar-wrapper {
+    transition: all 0.3s ease;
+    overflow: hidden;
+    background-color: rgb(203, 108, 108);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3); /* Optional: shadow for visibility */
+  }
+  
+  #page-content-wrapper {
+    transition: margin-left 0.3s ease;
+    padding-left: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    #sidebar-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 250px;
+      background-color: white;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+     
+      padding-top: 200px; /* Added top padding for mobile view */
+    }
+  
+    #page-content-wrapper {
+      margin-left: 0;
+    }
+  
+    .navbar-toggler {
+      display: block;
+    }
+  
+    .navbar-collapse {
+      display: block;
+    }
+  }
+  </style>
+  
+
+
+
+  npm install @fortawesome/fontawesome-free
