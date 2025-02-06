@@ -1,109 +1,111 @@
 <template>
-    <section>
-      <div class="border-container">
-        <span class="border-text">Top Left Text</span>
-  
-        <!-- Cart Carousel Container -->
-        <div id="carouselTwo" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <!-- First Group of 3 Cards -->
-            <div class="carousel-item active">
-              <div class="row pt-3">
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-              </div>
-            </div>
-  
-            <!-- Second Group of 3 Cards -->
-            <div class="carousel-item">
-              <div class="row pt-3">
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-              </div>
-            </div>
-  
-            <!-- Third Group of 3 Cards -->
-            <div class="carousel-item">
-              <div class="row pt-3">
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 card-item">
-                  <Cart />
-                </div>
-              </div>
-            </div>
-          </div>
-  
-          <!-- Carousel Controls -->
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselTwo" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselTwo" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-      </div>
-    </section>
-  </template>
-  
-  <script setup>
-  import Cart from '@/components/Cart.vue';
-  
- 
-  </script>
-  
-  <style scoped>
-  /* Add your custom styles */
-  .border-container {
-    position: relative;
-    border: 2px solid #a4ad21;
-    border-radius: 8px;
-    padding-top: 20px;
-    
-    border: none;
-    
-  }
-  
-  .border-text {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    border: 1px solid hsl(0, 29%, 97%);
-    border-radius: 25%;
-    font-size: 18px;
-    font-weight: bold;
-    color: #0c0c0c;
-    background-color: hsl(0, 2%, 74%);
-    padding: 5px;
-  }
-  </style>
-  
+  <h3 id="populer">Populer Category</h3>
+  <swiper
+    :slides-per-view="6"
+    :space-between="30"
+    grab-cursor
+    :pagination="{ clickable: true }"
+    :modules="modules"
+    :keyboard="true"
+    :navigation="true"
+    :loop="true"
+    class="mySwiper"
+    :breakpoints="{
+      320: { slidesPerView: 2, spaceBetween: 10 }, // Mobile View (1 Slide)
+      480: { slidesPerView: 3, spaceBetween: 15 }, // Small Screens (2 Slides)
+      768: { slidesPerView: 4, spaceBetween: 20 }, // Tablets (3 Slides)
+      1024: { slidesPerView: 6, spaceBetween: 30 } // Large Screens (4 Slides)
+    }"
+  >
+    <swiper-slide v-for="product in products" :key="product.title">
+      <Cart :title="product.title" :details="product.details" :price="product.price" :image="product.image" />
+    </swiper-slide>
+  </swiper>
+</template>
+
+<script setup>
+import { Swiper, SwiperSlide } from "swiper/vue";
+import Cart from "@/components/Cart.vue";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Pagination, Keyboard, Navigation } from "swiper/modules";
+
+
+const products = [
+{
+  image: "https://picsum.photos/seed/1/200/200",
+  title: "Product 1",
+  details: "Description for product 1",
+  price: "$10.00",
+},
+{
+  image: "https://picsum.photos/seed/2/200/200",
+  title: "Product 2",
+  details: "Description for product 2",
+  price: "$15.00",
+},
+{
+  image: "https://picsum.photos/seed/3/200/200",
+  title: "Product 3",
+  details: "Description for product 3",
+  price: "$20.00",
+},
+{
+  image: "https://picsum.photos/seed/4/200/200",
+  title: "Product 4",
+  details: "Description for product 4",
+  price: "$25.00",
+},
+{
+  image: "https://picsum.photos/seed/5/200/200",
+  title: "Product 5",
+  details: "Description for product 5",
+  price: "$30.00",
+},
+{
+  image: "https://picsum.photos/seed/6/200/200",
+  title: "Product 6",
+  details: "Description for product 6",
+  price: "$35.00",
+},
+{
+  image: "https://picsum.photos/seed/7/200/200",
+  title: "Product 7",
+  details: "Description for product 7",
+  price: "$40.00",
+},
+{
+  image: "https://picsum.photos/seed/8/200/200",
+  title: "Product 8",
+  details: "Description for product 8",
+  price: "$45.00",
+},
+{
+  image: "https://picsum.photos/seed/9/200/200",
+  title: "Product 9",
+  details: "Description for product 9",
+  price: "$50.00",
+},
+{
+  image: "https://picsum.photos/seed/10/200/200",
+  title: "Product 10",
+  details: "Description for product 10",
+  price: "$55.00",
+},
+];
+
+const modules = [Pagination, Keyboard, Navigation];
+</script>
+
+<style scoped>
+#populer {
+  z-index: 1000;
+  border: #0c0c0c;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: inline-block;
+  padding: 5px;
+  border-radius: 10%;
+  margin-left: 10px;
+}
+</style>

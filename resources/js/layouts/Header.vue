@@ -1,12 +1,11 @@
 <template>
   <header>
-    <div class="navbar-light shadow fixed-top shadow-bottom  align-items-baseline" style="z-index: 1000; background-color: #A3C140;">
-
+    <div class="navbar-light shadow fixed-top shadow-bottom align-items-baseline" style="z-index: 1000; background-color: #A3C140;">
       <div class="container-fluid d-flex justify-content-between align-items-center">
-        <div class="toggle_icon pt-2 ">
-            <button class="btn border-0 rounded-0" @click="$emit('toggle-sidebar')">
-              <i class="fas fa-bars h3"></i>
-            </button>
+        <div class="toggle_icon pt-2">
+          <button class="btn border-0 rounded-0" @click="$emit('toggle-sidebar')">
+            <i class="fas fa-bars h3"></i>
+          </button>
         </div>
         <div class="logo_shearch_btn d-flex justify-content-between w-100">
           <div class="logo_container">
@@ -27,17 +26,17 @@
               <button v-if="selectedLanguage === 'bn'" @click="setLanguage('en')" class="btn rounded-5 btn-active">
                 Eng
               </button>
-              <button v-else @click="setLanguage('bn')" class="btn  rounded-5 btn-active">
+              <button v-else @click="setLanguage('bn')" class="btn rounded-5 btn-active">
                 বাং
               </button>
             </div>
           </div>
         </div>
+
         <div class="profile me-3">
-          <div class="dropdown">
+          <div v-if="isAuthenticated" class="dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-user-circle" style="font-size: 30px;"></i>
-
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><router-link class="dropdown-item" to="/profile">Profile</router-link></li>
@@ -47,9 +46,61 @@
               <li><a class="dropdown-item" href="#" @click="logout">Logout</a></li>
             </ul>
           </div>
+          <div v-else>
+            <a href="#" class=" " @click="showLoginModal = true">
+  <i class="fas fa-user-circle" style="font-size: 40px;"></i>
+</a>
+
+          </div>
         </div>
       </div>
+    </div>
 
+    <!-- Login Modal -->
+    <div v-if="showLoginModal" class="modal fade show d-block" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Login</h5>
+            <button type="button" class="btn-close" @click="showLoginModal = false"></button>
+          </div>
+          <div class="modal-body">
+            <input type="email" class="form-control mb-3" v-model="loginForm.email" placeholder="Email">
+            <input type="password" class="form-control mb-3" v-model="loginForm.password" placeholder="Password">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" @click="showLoginModal = false">Close</button>
+            <button class="btn btn-primary" @click="login">Login</button>
+          </div>
+          <div style="padding-left: 20px;">
+            <p>if you don't have an account, please <a href="#" @click="showRegisterModal = true">Register</a></p>
+          </div>
+         
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div v-if="showRegisterModal" class="modal fade show d-block" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Register</h5>
+            <button type="button" class="btn-close" @click="showRegisterModal = false"></button>
+          </div>
+          <div class="modal-body">
+            <input type="text" class="form-control mb-3" v-model="registerForm.name" placeholder="Full Name">
+            <input type="email" class="form-control mb-3" v-model="registerForm.email" placeholder="Email">
+            <input type="password" class="form-control mb-3" v-model="registerForm.password" placeholder="Password">
+            <input type="password" class="form-control mb-3" v-model="registerForm.password_confirmation" placeholder="Confirm Password">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" @click="showRegisterModal = false">Close</button>
+            <button class="btn btn-primary" @click="register">Register</button>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 </template>
@@ -60,6 +111,19 @@ export default {
   data() {
     return {
       selectedLanguage: 'en', // Default language is English
+      isAuthenticated: false, // Authentication status
+      showLoginModal: false, // Controls login modal visibility
+      showRegisterModal: false, // Controls register modal visibility
+      loginForm: {
+        email: '',
+        password: ''
+      },
+      registerForm: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      }
     };
   },
   methods: {
@@ -70,21 +134,31 @@ export default {
     },
     logout() {
       console.log("User logged out!");
+      this.isAuthenticated = false; // Update authentication status
       // Logout logic (clear auth token & redirect) goes here
     },
-  },
+    login() {
+      console.log("Login attempt with:", this.loginForm);
+      // Add login logic here (API call, validation, etc.)
+      this.isAuthenticated = true; // Simulate successful login
+      this.showLoginModal = false; // Close the modal
+    },
+    register() {
+      console.log("Register attempt with:", this.registerForm);
+      // Add registration logic here (API call, validation, etc.)
+      this.showRegisterModal = false; // Close the modal
+    }
+  }
 };
 </script>
 
 <style scoped>
 .navbar-toggler {
   display: none;
-  /* Hide the collapse button */
 }
 
 .navbar-collapse {
   display: flex;
-  /* Always display the navbar items in a row */
 }
 
 .navbar {
@@ -95,17 +169,13 @@ export default {
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  /* Aligns the dropdown below the navbar */
   right: 0;
-  /* Adjust based on your preference */
   min-width: 150px;
   z-index: 1050;
-  /* Ensure it stays on top of other elements */
 }
 
 .navbar-nav {
   position: relative;
-  /* Make the navbar position relative to contain the absolute dropdown */
 }
 
 .btn-outline-secondary {
@@ -126,7 +196,6 @@ export default {
   width: 20px;
 }
 
-
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
   .navbar-nav {
@@ -134,34 +203,30 @@ export default {
     justify-content: space-between;
   }
 
-
   .navbar-nav.col-2 {
     flex: 1;
   }
 
   .input-group {
     max-width: 200px;
-    /* Shrink search bar on mobile */
   }
 
-  /* Ensures the navbar sections take up 6 columns */
   .col {
     flex: 1;
-    /* Search bar takes remaining space */
   }
 
   .navbar-nav.ms-auto {
     justify-content: space-around;
   }
 
-  /* Make the search button text hidden on mobile */
   .search-btn span {
     display: none;
   }
 
   .search-btn i {
     font-size: 20px;
-    /* Larger search icon */
   }
 }
+
+
 </style>

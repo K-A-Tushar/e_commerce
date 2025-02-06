@@ -9,7 +9,10 @@ import CarouselThree from "@/components/CarouselThree.vue";
 
 </script>
 
-<template>
+<template >
+  <div class="container-fluid">
+
+ 
   <!-- Navbar -->
   <section>
     <Navbar />
@@ -23,20 +26,23 @@ import CarouselThree from "@/components/CarouselThree.vue";
   <!-- Poster -->
   <section class="postersection">
     <div class="row pt-2">
-      <div class="col-lg-4 col-md-3 col-sm-6">
+      <div class="col-lg-3 col-md-2 col-sm-6">
         <Poster />
       </div>
-      <div class="col-lg-4 col-md-3 col-sm-6">
+      <div class="col-lg-3 col-md-2 col-sm-6">
         <Poster />
       </div>
-      <div class="col-lg-4 col-md-3 col-sm-6">
+      <div class="col-lg-3 col-md-2 col-sm-6">
+        <Poster />
+      </div>
+      <div class="col-lg-3 col-md-2 col-sm-6">
         <Poster />
       </div>
     </div>
   </section>
 
   <!-- Cart -->
-  <section class="cartsection">
+  <section class="cartsection ">
     <CarouselThree />
   </section>
 
@@ -54,7 +60,7 @@ import CarouselThree from "@/components/CarouselThree.vue";
 
 </section>
 
-
+</div>
 
 </template>
 

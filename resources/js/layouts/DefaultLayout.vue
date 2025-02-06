@@ -2,7 +2,7 @@
   <div id="wrapper">
     <HeaderComponent @toggle-sidebar="toggleSidebar" />
 
-    <div id="main-content">
+    <div id="main-content" class="container-fluid">
       <SidebarComponent :sidebarOpen="sidebarOpen" :isMobileView="isMobileView" />
       
       <div 
@@ -66,15 +66,19 @@ export default {
 #main-content {
   display: flex;
   flex: 1;
-  min-height: calc(100vh - 60px); /* Header er height minus kora */
+  padding-left: 0;
+  top: -60px;
+  /* min-height: calc(100vh - 60px); */ /* Header er height minus kora */
 }
 
 #sidebar-wrapper {
   width: 200px;
   transition: width 0.3s ease;
   height: 100vh;
+  padding-left: 10px;
+  display: fixed;
   background-color: white;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 0 5px rgba(32, 25, 25, 0.3);
 }
 
 #page-content-wrapper {
@@ -106,6 +110,7 @@ export default {
 
 #footerHeight {
   z-index: 1000;
+  position: relative;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
 }
 </style>
