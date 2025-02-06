@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('coupon_code')->nullable();
+            $table->string('order_number')->unique();
+            $table->date('order_date');
+            $table->decimal('total_price', 12, 2);
+            $table->string('shipping_address');
+            $table->enum('status', ['pending', 'processing', 'shipped', 'delivered', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

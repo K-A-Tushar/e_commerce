@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['admin', 'moderator', 'vendor', 'v_manager', 'officer', 'marketing_manager', 'Accountant', 'delivery',  'user'])->default('user');
+            $table->string('avatar')->nullable();
+            $table->string('phone')->nullable();
+            $table->foreignId('vendor_id')->nullable()->constrained()->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
