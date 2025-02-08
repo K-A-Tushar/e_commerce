@@ -13,7 +13,25 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            
+            $table->foreignId('vendor_id')->nullable()->constrained('vendors')->onDelete('set null');// we cullect the vendor id or user id for the product
+            $table->foreignId('category_id')->constrained('product_categories')->onDelete('cascade');
+            $table->foreignId('subcategory_id')->nullable()->constrained('product_subcategories')->onDelete('set null');
+            $table->foreignId('brand_id')->nullable()->constrained('brands')->onDelete('set null');
+            $table->string('name');
+            $table->string('thambnail')->nullable();
+            $table->string('slug', 255)->unique();
+            $table->string('sku', 100)->unique();
+            $table->string('barcode', 100)->unique()->nullable();
+            $table->text('short_description')->nullable();
+            $table->text('long_description')->nullable();
+            $table->string('seo_title')->nullable();
+            $table->text('seo_description')->nullable();
+            $table->decimal('price', 10, 2);
+            $table->decimal('discount_price', 10, 2)->nullable();
+            $table->enum('discount_type', ['fixed', 'percentage'])->nullable();
+            $table->decimal('rating', 3, 2)->nullable();// average rating
+            $table->integer('reviews_count')->default(0);// number of reviews
+            $table->integer('stock')->default(0);
             $table->timestamps();
         });
     }
