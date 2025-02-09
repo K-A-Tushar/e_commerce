@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade'); 
             $table->integer('quantity')->default(0);
-            $table->integer('dealer_price')->default(0);
-            $table->integer('wholesale_price')->default(0);
-            $table->integer('retail_price')->default(0);
+            $table->decimal('dealer_price', 10, 2)->default(0.00);
+            $table->decimal('wholesale_price', 10, 2)->default(0.00);
+            $table->decimal('retail_price', 10, 2)->default(0.00);
             $table->integer('reserved')->default(0);
             $table->integer('sold')->default(0);
             $table->integer('returned')->default(0)->nullable();
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('batch_number')->nullable();
             $table->date('expiry_date')->nullable();
             $table->enum('status', ['in_stock', 'low_stock', 'out_of_stock'])->default('in_stock');
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
     }

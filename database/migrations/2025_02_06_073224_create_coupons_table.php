@@ -19,8 +19,12 @@ return new class extends Migration
             $table->enum('type', ['fixed', 'percentage']);
             $table->date('start_date');
             $table->date('end_date');
-            $table->date('time_shedule')->nullable();
-            
+            $table->date('time_schedule')->nullable();
+            $table->integer('usage_limit')->nullable();
+            $table->decimal('min_order_amount', 10, 2)->nullable();
+            $table->integer('user_limit')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
     }

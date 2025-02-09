@@ -14,12 +14,15 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('coupon_code')->nullable();
-            $table->string('order_number')->unique();
-            $table->date('order_date');
-            $table->decimal('total_price', 12, 2);
-            $table->string('shipping_address');
+            $table->foreignId('coupon_id')->nullable()->constrained()->onDelete('set null');
+            $table->date('order_date')->default(now());
+            $table->decimal('total_price', 10, 2);
+            $table->text('shipping_address')->nullable();
+            $table->string('tracking_number')->unique();
+            $table->timestamp('delivered_at')->nullable();
             $table->enum('status', ['pending', 'processing', 'shipped', 'delivered', 'cancelled'])->default('pending');
+            $table->foreignId('payment_id')->nullable()->constrained()->onDelete('set null');
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
     }
