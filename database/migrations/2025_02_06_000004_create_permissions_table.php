@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
+            $table->boolean('canview')->default(0);
+            $table->boolean('canadd')->default(0);
+            $table->boolean('canedit')->default(0);
+            $table->boolean('candelete')->default(0);
+            $table->boolean('canprint')->default(0);
+            $table->boolean('canexport')->default(0);
+            $table->boolean('canlist')->default(0);
+            $table->boolean('canimport')->default(0);
+            $table->boolean('canapprove')->default(0);
+            $table->boolean('canreject')->default(0);
+            $table->boolean('canverify')->default(0);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,3 +37,4 @@ return new class extends Migration
         Schema::dropIfExists('permissions');
     }
 };
+

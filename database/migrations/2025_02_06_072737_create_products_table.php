@@ -32,6 +32,7 @@ return new class extends Migration
             $table->decimal('rating', 3, 2)->nullable(); // average rating
             $table->integer('reviews_count')->default(0); // number of reviews
             $table->integer('stock')->default(0);
+            $table->json('attributes')->nullable();
             $table->json('extra')->nullable();
             $table->timestamps();
         });

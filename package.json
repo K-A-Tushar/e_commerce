@@ -24,8 +24,11 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.7.2",
         "bootstrap-icons": "^1.11.3",
+        "fuse.js": "^7.1.0",
+        "lodash": "^4.17.21",
         "swiper": "^11.2.2",
         "vue-router": "^4.5.0",
+        "vue-select-next": "^0.1.6",
         "vuex": "^4.0.2"
     }
 }

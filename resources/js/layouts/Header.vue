@@ -14,7 +14,7 @@
           <div class="search_bar pt-2 w-50">
             <div class="col d-flex justify-content-center" style="padding-right: 20px;">
               <div class="input-group w-100">
-                <input class="form-control me-2" type="search" placeholder="Search here..." aria-label="Search">
+                <input class="form-control me-2" type="search" v-model="searchQuery" @input="searchProducts" placeholder="Search here..." aria-label="Search">
                 <button class="btn btn-primary search-btn" type="submit">
                   <i class="fas fa-search"></i>
                 </button>
