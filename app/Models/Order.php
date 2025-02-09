@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
     protected $fillable = [
         'user_id',
-        'coupon_code',
+        'coupon_id',
         'order_date',
         'total_price',
         'shipping_address',
@@ -16,6 +18,54 @@ class Order extends Model
         'delivered_at',
         'status',
     ];
+    protected $guarded = [];
+    protected $primaryKey = 'id';
+    protected $table = 'orders';
+
+    /** Relations table is: users, coupons
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    public function coupon(): BelongsTo
+    {
+        return $this->belongsTo(Coupon::class, 'coupon_id', 'id');
+    }
+
+    /** Relations table is: payments, order_items
+     * @return HasMany
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * Query Scopes
+     */
+    /**
+     * Accessors
+     */
+    /**
+     * Mutators
+     */
+    /**
+     * Events
+     */
+    /**
+     * Custom Methods
+     */
+    /**
+     * Static Methods
+     */
+
+    /** Auto generate tracking number */
     protected static function boot(){
         parent::boot();
 

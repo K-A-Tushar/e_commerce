@@ -3,8 +3,101 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    //
+    protected $fillable = [
+        'vendor_id',
+        'category_id',
+        'subcategory_id',
+        'brand_id',
+        'name',
+        'thumbnail',
+        'slug',
+        'sku',
+        'barcode',
+        'short_description',
+        'long_description',
+        'seo_title',
+        'seo_description',
+        'price',
+        'discount_price',
+        'discount_type',
+        'rating',
+        'reviews_count',
+        'stock',
+        'attributes',
+    ];
+    protected $guarded = [];
+    protected $primaryKey = 'id';
+    protected $table = 'products';
+
+    /** Relations table is: categories, vandors, brands, subcategories
+     * @return BelongsTo
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class);
+    }
+    public function subcategory(): BelongsTo
+    {
+        return $this->belongsTo(Subcategory::class);
+    }
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(Vendor::class);
+    }
+
+    
+    /** Relations table is: order_items, cart_items, wishlist, reviews, stocks
+     * @return HasMany
+     */
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
+    }
+    public function wishlist(): HasMany
+    {
+        return $this->hasMany(WishList::class);
+    }
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+    public function stocks(): HasMany
+    {
+        return $this->hasMany(Stock::class);
+    }
+    
+    /**
+     * Query Scopes
+     */
+    /**
+     * Accessors
+     */
+    /**
+     * Mutators
+     */
+    /**
+     * Events
+     */
+    /**
+     * Custom Methods
+     */
+    /**
+     * Static Methods
+     */
+    /**
+     * Auto-generated method
+     */
 }
