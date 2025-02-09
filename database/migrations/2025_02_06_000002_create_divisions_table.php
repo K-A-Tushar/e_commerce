@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('divisions', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('code');
+            $table->string('slug');
+            $table->string('bn_name');
+            $table->string('bn_code');
+            $table->string('bn_slug');
             $table->timestamps();
         });
     }
