@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('tracking_number')->unique();
             $table->timestamp('delivered_at')->nullable();
             $table->enum('status', ['pending', 'processing', 'shipped', 'delivered', 'cancelled'])->default('pending');
-            $table->foreignId('payment_id')->nullable()->constrained()->onDelete('set null');
             $table->json('extra')->nullable();
             $table->timestamps();
         });

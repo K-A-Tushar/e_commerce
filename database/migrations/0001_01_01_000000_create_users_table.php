@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->string('phone')->nullable();
             $table->json('extra')->nullable();
-            $table->foreignId('vendor_id')->nullable()->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('vendor_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
