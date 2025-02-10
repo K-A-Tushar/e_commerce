@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Vendor extends Model
 {
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'vendor_code',
         'shop_name',
         'shop_address',
         'shop_description',
@@ -28,6 +28,9 @@ class Vendor extends Model
         'status',
         'rating',
         'total_reviews'
+    ];
+    protected $attribute = [
+        
     ];
     
     protected $primaryKey = 'id';
@@ -70,5 +73,48 @@ class Vendor extends Model
      */
     /**
      * Auto-generated method
+     * string('vendor_code', 9)->unique()
      */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($vendor) {
+            do {
+                $vendor_code = strtoupper(Str::random(9));
+            } while (self::where('vendor_code', $vendor_code)->exists());
+
+            $vendor->vendor_code = $vendor_code;
+        });
+    }
+    public static function updateVendorCode($vendor)
+    {
+        do {
+            $vendor_code = strtoupper(Str::random(9));
+        } while (self::where('vendor_code', $vendor_code)->exists());
+
+        $vendor->vendor_code = $vendor_code;
+        $vendor->save();
+    }
+    public function getEditableFieldsAttribute()
+    {
+        $filtered = collect($this->toArray())->only([
+            'shop_name',
+            'shop_address',
+            'shop_email',
+            'phone_number',
+            'vendor_code',
+            'status',
+        ])->toArray();
+
+        $filtered['user'] = collect($this->user)->only([
+            'id',
+            'name',
+            'phone'
+        ])->toArray();
+    
+        return $filtered;
+        
+    }
+
 }

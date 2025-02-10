@@ -35,7 +35,7 @@ class Coupon extends Model
     /** Relations table is: order
      * @return HasMany
      */
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
