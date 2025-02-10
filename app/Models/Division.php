@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Division extends Model
 {
-    protected $fillable = [
+     use HasFactory;
+     protected $fillable = [
         'name',
         'code',
         'slug',
         'bn_name',
         'bn_slug',
     ];
-    protected $guarded = [];
+    
     protected $primaryKey = 'id';
     protected $table = 'divisions';
         /** Relations

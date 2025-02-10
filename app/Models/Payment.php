@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Payment extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'order_id',
         'payment_method',
@@ -18,7 +20,7 @@ class Payment extends Model
         'response_data',    
         'status',   
     ];
-    protected $guarded = [];
+    
     protected $primaryKey = 'id';
     protected $table = 'payments';
 
