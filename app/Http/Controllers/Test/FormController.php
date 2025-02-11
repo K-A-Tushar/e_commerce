@@ -49,7 +49,6 @@ class FormController extends Controller
         $user->email = $request->shop_email;
         $user->phone = $request->phone_number;
         $user->password = Hash::make($request->password);
-        $user->role = 'vendor';
         $user->save();
 
         // Create Vendor
