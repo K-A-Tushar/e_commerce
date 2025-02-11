@@ -51,6 +51,8 @@ class FormController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
+        $user->assignRole('vendor');
+
         // Create Vendor
         $vendor = new Vendor();
         $vendor->user_id = $user->id;
