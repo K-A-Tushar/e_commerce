@@ -84,6 +84,38 @@ class Product extends Model
     /**
      * Query Scopes
      */
+    public function scopeFilter($query, $search)
+    {
+        if ($search) {
+            return $query->whereHas('category', function($q) use ($search) {
+                $q->where('name', 'like', "{$search}%"); // added missing semicolon
+            })
+            ->orWhereHas('subcategory', function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%"); // added missing semicolon
+            })
+            ->orWhereHas('childcategory', function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%"); // corrected the typo and added semicolon
+            })
+            ->orWhere('name', 'like', "%{$search}%");
+        }
+    }
+    
+
+    public function scopeFilterByPrice($query, $minPrice = null, $maxPrice = null)
+    {
+        if($minPrice !== null){
+            $query->where('price','>=', $minPrice);
+        }
+
+        if($maxPrice !==null)
+        {
+            $query->where('price', '<=', $maxPrice);
+        }
+
+        return $query;
+    }
+
+    
     /**
      * Accessors
      */
@@ -103,3 +135,4 @@ class Product extends Model
      * Auto-generated method
      */
 }
+
